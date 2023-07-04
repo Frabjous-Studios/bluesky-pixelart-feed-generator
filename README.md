@@ -2,6 +2,14 @@
 
 Built + deployed from scratch in less than an hour.
 
+# ROADMAP
+
+1) Actual persistence on DigitalOcean using a real DB.
+2) Only keep content from the last 72 hours.
+3) Sort content somehow -- try to avoid the 'rich get richer'.
+
+## Everything below here is the original README from the fork.
+
 This is a starter kit for creating ATProto Feed Generators. It's not feature complete, but should give you a good
 starting ground off of which to build and deploy a feed.
 
