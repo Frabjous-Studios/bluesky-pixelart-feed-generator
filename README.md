@@ -28,7 +28,8 @@ The general flow of providing a custom algorithm to a user is as follows:
   - In the future, the PDS will hydrate the feed with the help of an App View, but for now, the PDS handles hydration itself
 - The PDS returns the hydrated feed to the user
 
-For users, this should feel like visiting a page in the app. Once they subscribe to a custom algorithm, it will appear in their home interface as one of their available feeds.
+For users, this should feel like visiting a page in the app. Once they subscribe to a custom algorithm, it will appear
+in their home interface as one of their available feeds.
 
 ## Getting Started
 
@@ -57,11 +58,14 @@ The service must be set up to respond to HTTPS queries over port 443.]()
 
 ### Publishing your feed
 
-To publish your feed, go to the script at `scripts/publishFeedGen.ts` and fill in the variables at the top. Examples are included, and some are optional. To publish your feed generator, simply run `yarn publishFeed`.
+To publish your feed, go to the script at `scripts/publishFeedGen.ts` and fill in the variables at the top. 
+Examples are included, and some are optional. To publish your feed generator, simply run `yarn publishFeed`.
 
-To update your feed's display data (name, avatar, description, etc.), just update the relevant variables and re-run the script.
+To update your feed's display data (name, avatar, description, etc.), just update the relevant variables and re-run the 
+script.
 
-After successfully running the script, you should be able to see your feed from within the app, as well as share it by embedding a link in a post (similar to a quote post).
+After successfully running the script, you should be able to see your feed from within the app, as well as share it by
+embedding a link in a post (similar to a quote post).
 
 ## Running the Server
 
@@ -110,7 +114,8 @@ This metadata serves two purposes:
 
 ### Authentication
 
-If you are creating a generic feed that does not differ for different users, you do not need to check auth. But if a user's state (such as follows or likes) is taken into account, we _strongly_ encourage you to validate their auth token.
+If you are creating a generic feed that does not differ for different users, you do not need to check auth. But if a
+user's state (such as follows or likes) is taken into account, we _strongly_ encourage you to validate their auth token.
 
 Users are authenticated with a simple JWT signed by the user's repo signing key.
 
@@ -141,22 +146,30 @@ We recommend, for instance, a compound cursor with a timestamp + a CID:
 
 ## Suggestions for Implementation
 
-How a feed generator fulfills the `getFeedSkeleton` request is completely at their discretion. At the simplest end, a Feed Generator could supply a "feed" that only contains some hardcoded posts.
+How a feed generator fulfills the `getFeedSkeleton` request is completely at their discretion. At the simplest end, a
+Feed Generator could supply a "feed" that only contains some hardcoded posts.
 
-For most use cases, we recommend subscribing to the firehose at `com.atproto.sync.subscribeRepos`. This websocket will send you every record that is published on the network. Since Feed Generators do not need to provide hydrated posts, you can index as much or as little of the firehose as necessary.
+For most use cases, we recommend subscribing to the firehose at `com.atproto.sync.subscribeRepos`. This websocket will
+send you every record that is published on the network. Since Feed Generators do not need to provide hydrated posts, you
+can index as much or as little of the firehose as necessary.
 
-Depending on your algorithm, you likely do not need to keep posts around for long. Unless your algorithm is intended to provide "posts you missed" or something similar, you can likely garbage collect any data that is older than 48 hours.
+Depending on your algorithm, you likely do not need to keep posts around for long. Unless your algorithm is intended to
+provide "posts you missed" or something similar, you can likely garbage collect any data that is older than 48 hours.
 
 Some examples:
 
 ### Reimplementing What's Hot
-To reimplement "What's Hot", you may subscribe to the firehose and filter for all posts and likes (ignoring profiles/reposts/follows/etc.). You would keep a running tally of likes per post and when a PDS requests a feed, you would send the most recent posts that pass some threshold of likes.
+To reimplement "What's Hot", you may subscribe to the firehose and filter for all posts and likes 
+(ignoring profiles/reposts/follows/etc.). You would keep a running tally of likes per post and when a PDS requests a
+feed, you would send the most recent posts that pass some threshold of likes.
 
 ### A Community Feed
-You might create a feed for a given community by compiling a list of DIDs within that community and filtering the firehose for all posts from users within that list.
+You might create a feed for a given community by compiling a list of DIDs within that community and filtering the
+firehose for all posts from users within that list.
 
 ### A Topical Feed
-To implement a topical feed, you might filter the algorithm for posts and pass the post text through some filtering mechanism (an LLM, a keyword matcher, etc.) that filters for the topic of your choice.
+To implement a topical feed, you might filter the algorithm for posts and pass the post text through some filtering
+mechanism (an LLM, a keyword matcher, etc.) that filters for the topic of your choice.
 
 ## Community Feed Generator Templates
 
