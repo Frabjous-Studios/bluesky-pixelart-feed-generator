@@ -1,14 +1,22 @@
 # ATProto Feed Generator
 
-This is a starter kit for creating ATProto Feed Generators. It's not feature complete, but should give you a good starting ground off of which to build and deploy a feed.
+This is a starter kit for creating ATProto Feed Generators. It's not feature complete, but should give you a good
+starting ground off of which to build and deploy a feed.
 
 ## Overview
 
 Feed Generators are services that provide custom algorithms to users through the AT Protocol.
 
-They work very simply: the server receives a request from a user's server and returns a list of [post URIs](https://atproto.com/specs/at-uri-scheme) with some optional metadata attached. Those posts are then hydrated into full views by the requesting server and sent back to the client. This route is described in the [`app.bsky.feed.getFeedSkeleton` lexicon](https://atproto.com/lexicons/app-bsky-feed#appbskyfeedgetfeedskeleton).
+They work very simply: the server receives a request from a user's server and returns a list of 
+[post URIs](https://atproto.com/specs/at-uri-scheme) with some optional metadata attached. Those posts are then hydrated
+into full views by the requesting server and sent back to the client. This route is described in the
+[`app.bsky.feed.getFeedSkeleton` lexicon](https://atproto.com/lexicons/app-bsky-feed#appbskyfeedgetfeedskeleton).
 
-A Feed Generator service can host one or more algorithms. The service itself is identified by DID, while each algorithm that it hosts is declared by a record in the repo of the account that created it. For instance, feeds offered by Bluesky will likely be declared in `@bsky.app`'s repo. Therefore, a given algorithm is identified by the at-uri of the declaration record. This declaration record includes a pointer to the service's DID along with some profile information for the feed.
+A Feed Generator service can host one or more algorithms. The service itself is identified by DID, while each algorithm
+that it hosts is declared by a record in the repo of the account that created it. For instance, feeds offered by Bluesky
+will likely be declared in `@bsky.app`'s repo. Therefore, a given algorithm is identified by the at-uri of the
+declaration record. This declaration record includes a pointer to the service's DID along with some profile information
+for the feed.
 
 The general flow of providing a custom algorithm to a user is as follows:
 - A user requests a feed from their server (PDS) using the at-uri of the declared feed
@@ -36,14 +44,16 @@ Next, you will need to do two things:
 
    For inspiration, we've provided a very simple feed algorithm (`whats-alf`) that returns all posts related to the titular character of the TV show ALF. 
 
-   You can either edit it or add another algorithm alongside it. The types are in place, and you will just need to return something that satisfies the `SkeletonFeedPost[]` type.
+   You can either edit it or add another algorithm alongside it. The types are in place, and you will just need to return
+3. something that satisfies the `SkeletonFeedPost[]` type.
 
-We've taken care of setting this server up with a did:web. However, you're free to switch this out for did:plc if you like - you may want to if you expect this Feed Generator to be long-standing and possibly migrating domains.
+We've taken care of setting this server up with a did:web. However, you're free to switch this out for did:plc if you
+like - you may want to if you expect this Feed Generator to be long-standing and possibly migrating domains.
 
 ### Deploying your feed
-Your feed will need to be accessible at the value supplied to the `FEEDGEN_HOSTNAME` environment variable.
+[Your feed will need to be accessible at the value supplied to the `FEEDGEN_HOSTNAME` environment variable.
 
-The service must be set up to respond to HTTPS queries over port 443.
+The service must be set up to respond to HTTPS queries over port 443.]()
 
 ### Publishing your feed
 
@@ -55,7 +65,9 @@ After successfully running the script, you should be able to see your feed from 
 
 ## Running the Server
 
-Install dependencies with `yarn` and then run the server with `yarn start`. This will start the server on port 3000, or what's defined in `.env`. You can then watch the firehose output in the console and access the output of the default custom ALF feed at [http://localhost:3000/xrpc/app.bsky.feed.getFeedSkeleton?feed=at://did:example:alice/app.bsky.feed.generator/whats-alf](http://localhost:3000/xrpc/app.bsky.feed.getFeedSkeleton?feed=at://did:example:alice/app.bsky.feed.generator/whats-alf).
+Install dependencies with `yarn` and then run the server with `yarn start`. This will start the server on port 3000, or
+what's defined in `.env`. You can then watch the firehose output in the console and access the output of the default
+custom ALF feed at [http://localhost:3000/xrpc/app.bsky.feed.getFeedSkeleton?feed=at://did:example:alice/app.bsky.feed.generator/whats-alf](http://localhost:3000/xrpc/app.bsky.feed.getFeedSkeleton?feed=at://did:example:alice/app.bsky.feed.generator/whats-alf).
 
 ## Some Details
 

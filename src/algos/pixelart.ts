@@ -3,7 +3,7 @@ import { QueryParams } from '../lexicon/types/app/bsky/feed/getFeedSkeleton'
 import { AppContext } from '../config'
 
 // max 15 chars
-export const shortname = 'whats-alf'
+export const shortname = 'pixelart'
 
 export const handler = async (ctx: AppContext, params: QueryParams) => {
   let builder = ctx.db
@@ -24,6 +24,7 @@ export const handler = async (ctx: AppContext, params: QueryParams) => {
       .orWhere((qb) => qb.where('post.indexedAt', '=', timeStr))
       .where('post.cid', '<', cid)
   }
+
   const res = await builder.execute()
 
   const feed = res.map((row) => ({
