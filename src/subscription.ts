@@ -16,7 +16,7 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
         // only posts containing 'pixelart' or both 'pixel' and 'art'
         let lc =  create.record.text.toLowerCase()
         let pixelart = lc.includes('pixelart')
-        let pixel_art = lc.includes('pixel') && lc.includes('art')
+        let pixel_art = lc.includes('pixel art')
         return pixelart || pixel_art
       })
       .map((create) => {
