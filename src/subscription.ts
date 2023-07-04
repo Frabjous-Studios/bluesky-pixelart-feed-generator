@@ -9,8 +9,8 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     if (!isCommit(evt)) return
     const ops = await getOpsByType(evt)
 
-
-    const postsToDelete = ops.posts.deletes.map((del) => del.uri)
+    const postsToDelete = ops.posts.deletes
+      .map((del) => del.uri)
     const postsToCreate = ops.posts.creates
       .filter((create) => {
         // only posts containing 'pixelart' or both 'pixel' and 'art'
